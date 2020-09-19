@@ -21,6 +21,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/input_field"
                 android:layout_width="0dp"
                 android:layout_height="500dp"
                 android:layout_weight="1" />
@@ -95,7 +96,7 @@
                 android:text="6" />
 
             <Button
-                android:id="@+id/plus"
+                android:id="@+id/button_plus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
@@ -133,7 +134,7 @@
                 android:text="9" />
 
             <Button
-                android:id="@+id/minus"
+                android:id="@+id/button_minus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
@@ -153,7 +154,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
-                android:text="7" />
+                android:text="+/-" />
 
             <Button
                 android:id="@+id/button_0"
@@ -177,7 +178,4 @@
                 android:text="=" />
         </LinearLayout>
     </LinearLayout>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
