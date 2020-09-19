@@ -8,10 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import org.w3c.dom.Text;
-
 public class ButtonActivity {
     private TextView inputField;
     private TextView resultField;
@@ -63,7 +59,24 @@ public class ButtonActivity {
     }
 
     private void addValueToView(String newValue) {
-        inputField.setText(inputField.getText() + newValue);
+        if (!duplicatedOperator(newValue)) inputField.setText(inputField.getText() + newValue);
+    }
+
+    private boolean duplicatedOperator(String symbol) {
+        String currentContent = (String) inputField.getText();
+        if (currentContent.length() == 0) {
+            return false;
+        }
+        String last = lastSymbol(currentContent);
+        if (isNumeric(last)) {
+            return false;
+        } else if (last.equals(symbol)) {
+            return true;
+        } else if (!isNumeric(symbol)){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void removeSymbol() {
@@ -74,12 +87,12 @@ public class ButtonActivity {
     private void removeLastNumber() {
         String currentContent = (String) inputField.getText();
 
-        if (isNumeric(String.valueOf(currentContent.charAt(currentContent.length() - 1)))) {
+        if (isNumeric(lastSymbol(currentContent))) {
             String newContent = "";
             String[] numbers = currentContent.split("\\D+");
             int lastNumberSize = numbers[numbers.length - 1].length();
             newContent = currentContent.substring(0, currentContent.length() - lastNumberSize);
-            if(String.valueOf(newContent.charAt(newContent.length() - 1)).equals(".")) {
+            if(lastSymbol(newContent).equals(".")) {
                 numbers = newContent.split("\\D+");
                 lastNumberSize = numbers[numbers.length - 1].length();
                 newContent = newContent.substring(0, newContent.length() - (lastNumberSize + 1));
@@ -87,7 +100,11 @@ public class ButtonActivity {
             inputField.setText(newContent);
         }
     }
-    
+
+    private String lastSymbol(String string) {
+        return String.valueOf(string.charAt(string.length() - 1));
+    }
+
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
