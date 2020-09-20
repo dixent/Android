@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ButtonActivity {
+import com.example.calculator.helpers.MainHelper;
+
+public class ButtonActivity extends MainHelper {
     private TextView inputField;
     private TextView resultField;
     private MainActivity layout;
@@ -56,6 +58,12 @@ public class ButtonActivity {
                 removeLastNumber();
             }
         });
+
+        layout.findViewById(R.id.button_minus_plus).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addPlusMinus();
+            }
+        });
     }
 
     private void addValueToView(String newValue) {
@@ -64,57 +72,63 @@ public class ButtonActivity {
 
     private boolean duplicatedOperator(String symbol) {
         String currentContent = (String) inputField.getText();
-        if (currentContent.length() == 0) {
-            return false;
-        }
+        if (blank(currentContent)) return !isNumeric(symbol);
+
         String last = lastSymbol(currentContent);
         if (isNumeric(last)) {
             return false;
         } else if (last.equals(symbol)) {
             return true;
-        } else if (!isNumeric(symbol)){
-            return true;
-        } else {
+        } else if (isNumeric(symbol) && !last.equals(")")) {
             return false;
-        }
+        } else return isNumeric(symbol);
     }
 
     private void removeSymbol() {
         String currentContent = (String) inputField.getText();
-        inputField.setText(currentContent.substring(0, currentContent.length() - 1));
+        if (!blank(currentContent)) inputField.setText(currentContent.substring(0, currentContent.length() - 1));
     }
 
     private void removeLastNumber() {
         String currentContent = (String) inputField.getText();
 
-        if (isNumeric(lastSymbol(currentContent))) {
+        if (!blank(currentContent) && isNumeric(lastSymbol(currentContent))) {
             String newContent = "";
-            String[] numbers = currentContent.split("\\D+");
-            int lastNumberSize = numbers[numbers.length - 1].length();
+            int lastNumberSize = lastNumber(currentContent).length();
             newContent = currentContent.substring(0, currentContent.length() - lastNumberSize);
             if(lastSymbol(newContent).equals(".")) {
-                numbers = newContent.split("\\D+");
-                lastNumberSize = numbers[numbers.length - 1].length();
+                lastNumberSize = lastNumber(newContent).length();
                 newContent = newContent.substring(0, newContent.length() - (lastNumberSize + 1));
             }
             inputField.setText(newContent);
         }
     }
 
-    private String lastSymbol(String string) {
-        return String.valueOf(string.charAt(string.length() - 1));
-    }
+    private void addPlusMinus() {
+        String currentContent = (String) inputField.getText();
 
-    public static boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
+        if (!blank(currentContent)) {
+            String lastSymbol = lastSymbol(currentContent);
+
+            if (isNumeric(lastSymbol)) {
+                String[] result = lastNumberWithOperator(currentContent);
+                String lastOperator = result[0], lastNumber = result[1];
+
+                if (!lastOperator.equals("-")) {
+                    String regexp = String.format("\\%s%s$", lastOperator, lastNumber);
+                    String replacement =  String.format("%s(-%s)", lastOperator, lastNumber);
+                    currentContent = currentContent.replaceFirst(regexp, replacement);
+                }
+            } else if (lastSymbol.equals(")")) {
+                String[] result = lastNumberWithOperatorFromExpression(currentContent);
+                String lastOperator = result[0], lastNumber = result[1];
+                String regexp = String.format("\\(\\%s%s\\)$", lastOperator, lastNumber);
+                String replacement = lastNumber;
+
+                currentContent = currentContent.replaceFirst(regexp, replacement);
+            }
+            inputField.setText(currentContent);
         }
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
     }
 
     private void calculateResult(String expressionString) {
