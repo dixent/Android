@@ -58,6 +58,7 @@ public class ButtonActivity extends MainHelper {
                     resultField.setText(String.valueOf(engine.eval((String) inputField.getText())));
                 } catch (ScriptException e) {
                     e.printStackTrace();
+                    resultField.setText(R.string.invalid_exp);
                 }
             }
         });
@@ -179,11 +180,15 @@ public class ButtonActivity extends MainHelper {
                 String replacement =  String.format("%s(-%s)", lastOperator, lastNumber);
                 currentContent = currentContent.replaceFirst(regexp, replacement);
             } else if (lastSymbol.equals(")")) {
-                String[] result = lastNumberWithOperatorFromExpression(currentContent);
-                String lastOperator = result[0], lastNumber = result[1];
-                String regexp = String.format("\\(\\%s%s\\)$", lastOperator, lastNumber);
-
-                currentContent = currentContent.replaceFirst(regexp, lastNumber);
+                String lastOperation = lastNumberWithOperatorFromExpressionWithBrackets(currentContent);
+                if (isNumeric(replaceBrackets(lastOperation))) {
+                    String[] result = lastNumberWithOperatorFromExpression(currentContent);
+                    String lastOperator = result[0], lastNumber = result[1];
+                    String regexp = String.format("\\(\\%s%s\\)$", lastOperator, lastNumber);
+                    currentContent = currentContent.replaceFirst(regexp, lastNumber);
+                } else {
+                    currentContent = String.format("(-%s)", lastOperation);
+                }
             }
             inputField.setText(currentContent);
         }

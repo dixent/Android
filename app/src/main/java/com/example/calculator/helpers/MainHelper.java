@@ -44,10 +44,27 @@ public abstract class MainHelper {
     protected String lastNumberWithOperatorFromExpressionWithBrackets(String content) {
         String[] numbers = content.split(SIMPLE_OPERATORS);
         String lastOperation = numbers[numbers.length - 1];
-        if (!lastOperation.contains("(")) {
-            lastOperation = String.format("%s-%s",numbers[numbers.length - 2], lastOperation);
+        int index = 2;
+        while(!compareBracketsCount(lastOperation)) {
+            lastOperation = String.format("%s-%s",numbers[numbers.length - index], lastOperation);
+            index += 1;
         }
         return lastOperation;
+    }
+
+    protected boolean compareBracketsCount(String content) {
+        int openBrackets = 0;
+        int closeBrackets = 0;
+
+        for (char symbol: content.toCharArray()) {
+            if(String.valueOf(symbol).equals("(")) {
+                openBrackets += 1;
+            } else if(String.valueOf(symbol).equals(")")) {
+                closeBrackets += 1;
+            }
+        }
+
+        return openBrackets == closeBrackets;
     }
 
     protected String lastSymbol(String string) {

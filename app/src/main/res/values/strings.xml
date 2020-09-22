@@ -24,4 +24,5 @@
     <string name="cos">cos()</string>
     <string name="tg">tg()</string>
     <string name="ctg">ctg()</string>
+    <string name="invalid_exp">Invalid expression!</string>
 </resources>
