@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/normal"
-        android:title="Normal"/>
-    <item android:id="@+id/emboss"
-        android:title="Embboss"/>
+        android:title="@string/normal"/>
     <item android:id="@+id/blur"
-        android:title="Blur"/>
+        android:title="@string/blur"/>
+    <item android:id="@+id/fill_figure"
+        android:title="@string/fill_figure"/>
+    <item android:id="@+id/line"
+        android:title="@string/line"/>
+    <item android:id="@+id/straight_line"
+        android:title="@string/straight_line"/>
+    <item android:id="@+id/rectangle"
+        android:title="@string/rectangle"/>
+    <item android:id="@+id/square"
+        android:title="@string/square"/>
+    <item android:id="@+id/oval"
+        android:title="@string/oval"/>
+    <item android:id="@+id/circle"
+        android:title="@string/circle"/>
+    <item android:id="@+id/open_image"
+        android:title="@string/open_image"/>
+    <item android:id="@+id/make_photo"
+        android:title="@string/make_photo"/>
     <item android:id="@+id/clear"
-        android:title="Clear"/>
+        android:title="@string/clear"/>
 </menu>

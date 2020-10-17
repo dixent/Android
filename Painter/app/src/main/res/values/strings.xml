@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Painter</string>
+    <string name="permission_storage_failure">Permission of storage is failed!</string>
+    <string name="permission_camera_failure">Permission of camera is failed!</string>
+    <string name="normal">Normal</string>
+    <string name="fill_figure">Fill figure</string>
+    <string name="blur">Blur</string>
+    <string name="line">Line</string>
+    <string name="straight_line">Straight line</string>
+    <string name="rectangle">Rectangle</string>
+    <string name="square">Square</string>
+    <string name="oval">Oval</string>
+    <string name="circle">Circle</string>
+    <string name="open_image">Open image</string>
+    <string name="make_photo">Make photo</string>
+    <string name="clear">Clear</string>
 </resources>
