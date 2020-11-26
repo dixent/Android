@@ -161,10 +161,12 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                break;
             case 3:
                 if (resultCode == RESULT_OK) {
                     paintView.setBitmapBackground((Bitmap) data.getExtras().get("data"));
                 }
+                break;
         }
     }
 
