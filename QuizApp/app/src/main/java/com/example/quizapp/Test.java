@@ -1,5 +1,13 @@
 package com.example.quizapp;
 
-public class Test {
-    public String name;
+import java.io.Serializable;
+
+public class Test implements Serializable {
+    public String id;
+
+    public Test() {}
+
+    public Test(String id) {
+        this.id = id;
+    }
 }

@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         if (currentUser == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, TestActivity.class);
+            startActivity(intent);
         }
     }
 
