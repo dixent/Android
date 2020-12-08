@@ -14,4 +14,15 @@
     <string name="login">Login</string>
     <string name="registration">Registration</string>
     <string name="select_quiz">Select quiz:</string>
+    <string name="my_scores">My scores:</string>
+    <string name="top_ten">Top ten:</string>
+    <string name="top_hundred">Top hundred:</string>
+    <string name="my">My</string>
+    <string name="top_10">Top 10</string>
+    <string name="top_100">Top 100</string>
+    <string name="sign_out">Sign out</string>
+    <string name="scores">Scores</string>
+    <string name="tests">Tests</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_ad_unit_id_finished_quiz">ca-app-pub-4204397579039349/5253600606</string>
 </resources>

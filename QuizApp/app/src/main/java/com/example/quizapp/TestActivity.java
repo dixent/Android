@@ -3,6 +3,8 @@ package com.example.quizapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestActivity extends Activity {
+public class TestActivity extends ActivityWithMenu {
     private ListView listView;
     private List<String> listData;
     private ArrayAdapter<String> adapter;
@@ -43,6 +45,7 @@ public class TestActivity extends Activity {
             toast.show();
         }
     }
+
     private void init() {
         listView = findViewById(R.id.tests_list);
         listData = new ArrayList<>();

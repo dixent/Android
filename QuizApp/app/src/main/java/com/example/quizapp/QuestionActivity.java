@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QuestionActivity extends Activity {
+public class QuestionActivity extends ActivityWithMenu {
     private DatabaseReference database;
     private ArrayList<Question> questions;
     private Integer score, currentQuestionIndex;
@@ -30,12 +33,18 @@ public class QuestionActivity extends Activity {
     private ArrayList<Button> buttons;
     private FirebaseAuth mAuth;
     private String testName;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question_activity);
         init();
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-4204397579039349/5253600606");
+
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
 
     private void setQuestion(final Integer questionIndex) {
@@ -51,6 +60,11 @@ public class QuestionActivity extends Activity {
             Intent intent = new Intent(QuestionActivity.this, TestActivity.class);
             String scoreAlert = String.format("%s quiz finished. Your score is %d.", testName, score);
             intent.putExtra("scoreAlert", scoreAlert);
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            } else {
+
+            }
             startActivity(intent);
         }
     }
@@ -60,6 +74,7 @@ public class QuestionActivity extends Activity {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("scores").child(user.getUid());
         Map<String, Object> userUpdates = new HashMap<>();
         userUpdates.put(testName, score);
+        userUpdates.put("email", user.getEmail());
         userRef.updateChildren(userUpdates);
     }
 
